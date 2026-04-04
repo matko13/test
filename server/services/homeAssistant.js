@@ -5,13 +5,13 @@ const HA_URL = process.env.HA_URL
 const HA_TOKEN = process.env.HA_TOKEN
 
 const sensors = {
-  production: process.env.HA_SENSOR_PV_PRODUCTION || 'sensor.deye_daily_production',
-  consumption: process.env.HA_SENSOR_PV_CONSUMPTION || 'sensor.deye_daily_consumption',
-  export: process.env.HA_SENSOR_PV_EXPORT || 'sensor.deye_daily_export',
-  import: process.env.HA_SENSOR_PV_IMPORT || 'sensor.deye_daily_import',
-  power: process.env.HA_SENSOR_PV_POWER || 'sensor.deye_current_power',
-  batterySoc: process.env.HA_SENSOR_PV_BATTERY_SOC || 'sensor.deye_battery_soc',
-  selfConsumption: process.env.HA_SENSOR_PV_SELF_CONSUMPTION || 'sensor.deye_self_consumption_rate',
+  production: process.env.HA_SENSOR_PV_PRODUCTION || 'sensor.solarman_daily_production',
+  consumption: process.env.HA_SENSOR_PV_CONSUMPTION || 'sensor.solarman_daily_load_consumption',
+  export: process.env.HA_SENSOR_PV_EXPORT || 'sensor.solarman_daily_energy_sell',
+  import: process.env.HA_SENSOR_PV_IMPORT || 'sensor.solarman_daily_energy_buy',
+  power: process.env.HA_SENSOR_PV_POWER || 'sensor.solarman_total_active_power',
+  batterySoc: process.env.HA_SENSOR_PV_BATTERY_SOC || 'sensor.solarman_battery_soc',
+  selfConsumption: process.env.HA_SENSOR_PV_SELF_CONSUMPTION || 'sensor.solarman_self_consumption_rate',
 }
 
 async function getState(entityId) {

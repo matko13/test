@@ -75,7 +75,7 @@ function winner(scores) {
 export function getMockConfig() {
   return {
     player1: { name: 'Ja (Deye)', inverter: 'Deye', source: 'Home Assistant' },
-    player2: { name: 'Sąsiad (Huawei)', inverter: 'Huawei', source: 'SolarFusion' },
+    player2: { name: 'Sąsiad (Huawei)', inverter: 'Huawei', source: 'FusionSolar' },
     demoMode: true,
   }
 }

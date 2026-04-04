@@ -1,7 +1,7 @@
 # PV Battle - Gamifikacja Produkcji Fotowoltaicznej
 
 Dashboard do rywalizacji w produkcji energii słonecznej między sąsiadami.
-Łączy dane z **Home Assistant** (falownik Deye) oraz **SolarFusion** (falownik Huawei).
+Łączy dane z **Home Assistant** (falownik Deye) oraz **FusionSolar** (falownik Huawei).
 
 ## Funkcje
 
@@ -22,7 +22,7 @@ npm run dev
 
 Dashboard uruchomi się na `http://localhost:5173` w trybie demo.
 
-## Konfiguracja z prawdziwymi danymi
+## Konfiguracja prawdziwych danych
 
 Skopiuj `.env.example` do `.env` i uzupełnij:
 
@@ -31,14 +31,35 @@ cp .env.example .env
 ```
 
 ### Home Assistant (Twoje dane - Deye)
-- `HA_URL` - adres Home Assistant (np. `http://homeassistant.local:8123`)
-- `HA_TOKEN` - Long-Lived Access Token z HA (Profil → Tokeny)
-- `HA_SENSOR_*` - entity_id sensorów falownika Deye
 
-### SolarFusion (Dane sąsiada - Huawei)
-- `SOLARFUSION_URL` - URL API SolarFusion
-- `SOLARFUSION_API_KEY` - klucz API
-- `SOLARFUSION_PLANT_ID` - ID instalacji sąsiada
+1. **HA_URL** - adres Home Assistant (np. `http://homeassistant.local:8123`)
+2. **HA_TOKEN** - Long-Lived Access Token:
+   - HA → Profil → Security → Long-Lived Access Tokens → Utwórz token
+3. **HA_SENSOR_*** - entity_id sensorów falownika Deye/Solarman:
+   - Sprawdź w HA → Developer Tools → States → wyszukaj "deye" lub "solarman"
+   - Albo uruchom backend i wejdź na `/api/debug/ha-sensors`
+
+### FusionSolar (Dane sąsiada - Huawei)
+
+Potrzebujesz konta **Northbound API** w FusionSolar (nie zwykłego loginu!):
+
+1. Zaloguj się do FusionSolar jako administrator firmy
+2. Idź do: **System → Company Management → Northbound Management → Add**
+3. Utwórz login i hasło dla API
+4. Wpisz w `.env`:
+   - `FUSIONSOLAR_USER` - login Northbound
+   - `FUSIONSOLAR_PASSWORD` - hasło Northbound
+5. Opcjonalnie: `FUSIONSOLAR_STATION_CODE` (auto-discovery jeśli puste)
+
+**URL API** - domyślnie `https://intl.fusionsolar.huawei.com/thirdData`. Dla EU:
+- `https://eu5.fusionsolar.huawei.com/thirdData`
+
+## Debugowanie
+
+Po skonfigurowaniu `.env` i uruchomieniu backendu:
+
+- `GET /api/debug/ha-sensors` - lista wszystkich sensorów solarnych w HA
+- `GET /api/debug/fusionsolar` - test połączenia z FusionSolar
 
 ## Uruchomienie z backendem
 
@@ -60,4 +81,4 @@ npm run dev          # frontend (port 5173, proxy do API)
 
 - **Frontend**: React + Vite + Tailwind CSS v4 + Recharts + Lucide Icons
 - **Backend**: Express.js
-- **Źródła danych**: Home Assistant REST API, SolarFusion API
+- **Źródła danych**: Home Assistant REST API (Deye), Huawei FusionSolar Northbound API
